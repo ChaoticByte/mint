@@ -81,3 +81,17 @@ If you want to write a `/`, use a
 //
 ```
 
+
+# Converter
+
+To convert mint to html, use `mint2html.py`.  
+
+Example:
+
+```
+./mint2html.py -i input_file.mint -o output_file.html
+```
+
+You can also omit the input/output files to read from stdin/output to stdout.
+
+Use `mint2html.py --help` to view the full help text.
