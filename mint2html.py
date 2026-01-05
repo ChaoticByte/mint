@@ -1,5 +1,7 @@
 #!/usr/bin/env python3
-# Copyright 2026 ChaoticByte (Julian Müller)
+
+# Copyright (c) 2026, Julian Müller (ChaoticByte)
+# Licensed under the BSD 3-Clause License
 
 # pylint: disable=line-too-long,missing-module-docstring,missing-class-docstring,missing-function-docstring
 
