@@ -1,18 +1,18 @@
-# mint - Minimal Text Markup
+# MINT - Minimal Text Markup
 
-Mint is a minimal text markup language that can be compiled to html.
+MINT is a minimal text markup language that can be compiled to html.
 
 For a syntax- and feature-overview, have a look at [Quick Reference](#quick-reference).
 
 
 # Markup
 
-Version 1.x
+Version 1
 
 > [!NOTE]  
 > See `example.mint` for a working usage example.
 
-Like HTML, Mint uses tags to style documents.
+Like HTML, MINT uses tags to style documents.
 A tag consists of a forward slash `/`, one letter (e.g. `b`) and another forward slash.
 Tags toggle a style, so you can start bold text with `/b/` and end it with `/b/`.
 
@@ -37,7 +37,7 @@ Tags toggle a style, so you can start bold text with `/b/` and end it with `/b/`
 
 # Converter
 
-To convert mint to html, use the `mint2html.py` commandline tool.
+To convert MINT to HTML, use the `mint2html.py` command-line tool.
 
 
 ## Supported platforms
@@ -60,5 +60,5 @@ Use `mint2html.py --help` to view the full help text.
 Tip: If you are in a bash shell, and have pandoc installed, you can pipe the output of mint2html.py directly into pandoc, e.g.:
 
 ```bash
-/mint2html.py --input-file example.mint --minify | pandoc --from html -o example.epub
+./mint2html.py --input-file example.mint --minify | pandoc --from html -o example.epub
 ```
