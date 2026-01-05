@@ -40,13 +40,16 @@ class ConverterState:
     # wether this cycle actually converted something:
     cycle_had_op = False
 
-    # (in)active styles/formats
+    # (in)active styles/formats/blocks
     comment = False
+    paragraph = False
+    blockquote = False
     heading = False
     subheading = False
     italic = False
     bold = False
     underline = False
+    strike_through = False
     whitespace_pre = False
 
     def complete_cycle(self):
@@ -64,14 +67,21 @@ class MintToHtmlConverter:
     '''A simple converter from Mint to HTML
     Currently supports:
     
-        - comments          /#/
-        - heading           /h/
-        - subheading        /s/
-        - italic            /i/
-        - bold              /b/
-        - underline         /u/
-        - keep whitespaces  /e/
-        - line breaks       /l/
+        - comments                  /#/
+
+        - paragraphs                /p/
+        - block quotes              /q/
+
+        - headings                  /h/
+        - subheadings               /s/
+
+        - italic                    /i/
+        - bold                      /b/
+        - underline                 /u/
+        - deleted (strike-through)  /d/
+
+        - keep whitespaces          /e/
+        - line breaks               /l/
     '''
 
     def __init__(
@@ -83,11 +93,14 @@ class MintToHtmlConverter:
         self.css = css
         self.tags = [
             MintTagToHtml("#", None, "comment"),
+            MintTagToHtml("p", "p", "paragraph"),
+            MintTagToHtml("q", "blockquote", "blockquote"),
             MintTagToHtml("h", "h1", "heading"),
             MintTagToHtml("s", "h2", "subheading"),
             MintTagToHtml("i", "i", "italic"),
             MintTagToHtml("b", "b", "bold"),
             MintTagToHtml("u", "u", "underline"),
+            MintTagToHtml("d", "s", "strike_through"),
             MintTagToHtml("e", "pre", "whitespace_pre"),
             MintTagToHtml("l", "br", None)
         ]

@@ -2,19 +2,12 @@
 
 Mint is a minimal text markup language that can be compiled to html.
 
-As of version 0.1, mint supports
-
-    - comments
-    - headings
-    - subheadings
-    - italic text
-    - bold text
-    - underline text
-    - keep whitespaces (html `<pre>`)
-    - manual line breaks (html `br`)
+For a syntax- and feature-overview, have a look at [Quick Reference](#quick-reference).
 
 
-# Syntax
+# Markup
+
+Version 1.x
 
 > [!NOTE]  
 > See `example.mint` for a working usage example.
@@ -23,75 +16,49 @@ Like HTML, Mint uses tags to style documents.
 A tag consists of a forward slash `/`, one letter (e.g. `b`) and another forward slash.
 Tags toggle a style, so you can start bold text with `/b/` and end it with `/b/`.
 
-## Comments
 
-```
-/#/This is a comment/#/
-```
-> [!WARNING]  
-> Comments aren't compiled into html comments, but skipped!
+## Quick Reference
 
-
-## Headings and Sub-headings
-
-```
-/h/Heading/h/
-
-/s/Subheading/s/
-```
-
-Headings are compiled into `<h1>`, subheadings into `<h2>`.
-
-
-## Bold, italic and underlined text
-
-```
-Text can be /b/bold/b/, /i/italic/i/ and /u/underlined/u/, or /b//i//u/everything at once/b//i//u/.
-```
-
-## Keep whitespaces
-
-Whitespaces (spaces, newlines, etc.) won't get rendered in HTML.  
-To preserve whitespaces, use
-
-```
-/e/
-This text
-           will be indented.
-/e/
-```
-
-## Newlines
-
-You can insert newlines with
-
-```
-/l/
-```
-
-> [!NOTE]  
-> This tag cannot be closed.
-
-
-## Escape slashes
-
-If you want to write a `/`, use a
-
-```
-//
-```
+| Markup      | HTML             | Meaning                |
+| :---------: | :--------------: | ---------------------- |
+| `/#/.../#/` |                  | Comment (**not compiled into HTML!**) |
+| `/p/.../p/` | `<p>...</p>`     | Paragraph              |
+| `/q/.../q/` | `<blockquote>...</blockquote>` | Blockquote |
+| `/h/.../h/` | `<h1>...</h1>`   | Heading                |
+| `/s/.../s/` | `<h2>...</h2>`   | Subheading             |
+| `/i/.../i/` | `<i>...</i>`     | _Italic text_          |
+| `/b/.../b/` | `<b>...</b>`     | **Bold text**          |
+| `/u/.../u/` | `<u>...</u>`     | <u>Underlined text</u> |
+| `/d/.../d/` | `<s>...</s>`     | ~~Deleted text~~       |
+| `/e/.../e/` | `<pre>...</pre>` | Keep whitespaces (spaces, new lines, ...) |
+| `/l/`       | `<br>`           | Line-break (new line)  |
+| `//`        | `/`              | Escape a forward slash |
 
 
 # Converter
 
-To convert mint to html, use `mint2html.py`.  
+To convert mint to html, use the `mint2html.py` commandline tool.
 
-Example:
 
-```
+## Supported platforms
+
+I develop and test on **Linux** with **Python 3.13**, so the code should generally run on Unix-based systems.
+
+There is no code implemented that only works on Unix systems, so it _should_ work on Microslop Windows, although I'm too lazy to test this.
+
+
+## Example
+
+```bash
 ./mint2html.py -i input_file.mint -o output_file.html
 ```
 
 You can also omit the input/output files to read from stdin/output to stdout.
 
 Use `mint2html.py --help` to view the full help text.
+
+Tip: If you are in a bash shell, and have pandoc installed, you can pipe the output of mint2html.py directly into pandoc, e.g.:
+
+```bash
+/mint2html.py --input-file example.mint --minify | pandoc --from html -o example.epub
+```
