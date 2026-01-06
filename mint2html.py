@@ -3,7 +3,7 @@
 # Copyright (c) 2026, Julian Müller (ChaoticByte)
 # Licensed under the BSD 3-Clause License
 
-# pylint: disable=line-too-long,missing-module-docstring,missing-class-docstring,missing-function-docstring
+# pylint: disable=line-too-long,missing-module-docstring,missing-class-docstring,missing-function-docstring,invalid-name
 
 from html import escape
 from pathlib import Path
@@ -175,7 +175,7 @@ if __name__ == "__main__":
     from argparse import ArgumentParser
 
     argp = ArgumentParser()
-    argp.add_argument("-i", "--input-file", help="Input file (will read from stdin until eof when omitted)", type=Path, required=False)
+    argp.add_argument("-i", "--input-file", help="Input file(s) (will read from stdin until eof when omitted)", type=Path, required=False, nargs="*")
     argp.add_argument("-o", "--output-file", help="Output file (will print to stdout when omitted)", type=Path, required=False)
     argp.add_argument("--css", help="Add css to the html output", type=str, default="")
     argp.add_argument("--no-escape-html", help="Don't escape html in the input", action="store_true")
@@ -191,11 +191,14 @@ if __name__ == "__main__":
         input_lines = []
         for l in stdin:
             input_lines.append(l)
-        input_text = "\n".join(input_lines) # pylint: disable=invalid-name
+        input_text = "\n".join(input_lines)
         del input_lines
     else:
-        log(f"Reading text from {str(args.input_file)} ...")
-        input_text = args.input_file.read_text()
+        log(f"Reading text from {str([str(f) for f in args.input_file])} ...")
+        inputs = []
+        for f in args.input_file:
+            inputs.append(f.read_text())
+        input_text = "\n".join(inputs)
 
     log("Converting text ...")
     output_document = MintToHtmlConverter(
@@ -206,7 +209,7 @@ if __name__ == "__main__":
     if args.minify_html:
         log("Minifying html output ...")
         import minify_html
-        output_document = minify_html.minify(output_document)
+        output_document = minify_html.minify(output_document) # pylint: disable=no-member
 
     if args.output_file is None:
         log("Writing output to stdout ...")
