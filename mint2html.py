@@ -53,6 +53,7 @@ class ConverterState:
     underline = False
     strike_through = False
     whitespace_pre = False
+    alignment = "" # left: <  center: |  right >  justify: =
 
     def complete_cycle(self):
         self.pos += self.pos_offset
@@ -82,6 +83,11 @@ class MintToHtmlConverter:
         - underline                 /u/
         - deleted (strike-through)  /d/
 
+        - align to left             /</
+        - align to center           /|/
+        - align to right            />/
+        - align justified           /=/
+
         - keep whitespaces          /e/
         - line breaks               /l/
     '''
@@ -93,8 +99,9 @@ class MintToHtmlConverter:
     ):
         self.escape_html = escape_html
         self.css = css
+        self.comment_tag = MintTagToHtml("#", None, "comment")
         self.tags = [
-            MintTagToHtml("#", None, "comment"),
+            self.comment_tag,
             MintTagToHtml("p", "p", "paragraph"),
             MintTagToHtml("q", "blockquote", "blockquote"),
             MintTagToHtml("h", "h1", "heading"),
@@ -106,14 +113,24 @@ class MintToHtmlConverter:
             MintTagToHtml("e", "pre", "whitespace_pre"),
             MintTagToHtml("l", "br", None)
         ]
+        self.alignments = {
+            "<": "left",
+            "|": "center",
+            ">": "right",
+            "=": "justify"
+        }
 
     def __call__(self, text_in: str, ) -> str:
         '''Convert mint to html'''
         # replace unwanted characters
         text_in = text_in.replace("\r", "")
         # html escape
+        text_in = text_in.replace("/</", "/lalgn/")
+        text_in = text_in.replace("/>/", "/ralgn/")
         if self.escape_html:
             text_in = escape(text_in)
+        text_in = text_in.replace("/lalgn/", "/</")
+        text_in = text_in.replace("/ralgn/", "/>/")
         # parsing & conversion
         state = ConverterState()
 
@@ -149,7 +166,7 @@ class MintToHtmlConverter:
                 break
             c1 = text_in[state.pos + 1]
             if c == TAG_BOUNDARY:
-                if c1 == TAG_BOUNDARY:
+                if c1 == TAG_BOUNDARY and not state.comment:
                     # e.g. // -> /
                     state.pos_offset += 1
                     state.add_output(TAG_BOUNDARY)
@@ -158,14 +175,27 @@ class MintToHtmlConverter:
                 if state.pos + 2 < len_text_in:
                     c2 = text_in[state.pos + 2]
                     if c2 == TAG_BOUNDARY:
-                        # process tags
-                        for t in self.tags:
-                            process_inline_tag(c1, state, t)
+                        if state.comment:
+                            process_inline_tag(c1, state, self.comment_tag)
+                        else:
+                            for t in self.tags:
+                                process_inline_tag(c1, state, t)
+                        # toggle alignment
+                        if c1 in self.alignments:
+                            state.pos_offset += 2
+                            if state.alignment == c1:
+                                pass
+                            elif state.alignment != "":
+                                state.add_output("</section>")
+                            state.add_output(f"<section style='text-align: {self.alignments[c1]}'>")
+                            state.alignment = c1
             if not state.cycle_had_op and not state.comment:
                 state.output += c
             # complete this cycle's state
             state.complete_cycle()
         # cleanup
+        if state.alignment != "":
+            state.add_output("</section>")
         state.output = state.output.strip()
         # return result
         return state.output

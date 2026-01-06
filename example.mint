@@ -3,15 +3,30 @@
 
 /#/ Example comment /#/
 
+
+Per default, text is aligned left
+/|/
+but you can also center it
+/>/
+or align it to the right.
+
+/#/ put a newline: /#/
+
+/</ /l/ Remember to switch back to left-alignment
+
+/l/
+
+Text can also be aligned justified: /=/
+
 /p/
 Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
 /p/
 
+/</
+
 /s/A Subheading/s/
 
 Mint supports /#/ inline comments and/#/ /b/bold/b/, /i/italic/i/ and /u/underlined/u/ text.
-
-/#/ put a newline: /#/  /l/
 
 You can also /d/strike-through/d/ text to indicate that it has been deleted.
 
@@ -20,23 +35,32 @@ You can also /d/strike-through/d/ text to indicate that it has been deleted.
 /p/
 Show off a quote:
 
+/#/ NOTE: if you want to align a blockquote, put your alignment tag before the /q//#/
+
 /q/
 At vero eos et accusamus et iusto odio dignissimos ducimus qui blanditiis praesentium voluptatum deleniti atque corrupti quos dolores et quas molestias excepturi sint occaecati cupiditate non provident, similique sunt in culpa qui officia deserunt mollitia animi, id est laborum et dolorum fuga. Et harum quidem rerum facilis est et expedita distinctio. Nam libero tempore, cum soluta nobis est eligendi optio cumque nihil impedit quo minus id quod maxime placeat facere possimus, omnis voluptas assumenda est, omnis dolor repellendus. Temporibus autem quibusdam et aut officiis debitis aut rerum necessitatibus saepe eveniet ut et voluptates repudiandae sint et molestiae non recusandae. Itaque earum rerum hic tenetur a sapiente delectus, ut aut reiciendis voluptatibus maiores alias consequatur aut perferendis doloribus asperiores repellat.
-/l//l/
-/i/- "de Finibus Bonorum et Malorum", Cicero/i/
+/l/
+/|//i/"de Finibus Bonorum et Malorum", Cicero/i/
 /q/
 /p/
+
+/</
 
 /s/Another Subheading/s/
 
 Enforce a // with "////" to get //u//, //i//, etc.
 or an url like https:////example.org
 
-/e/You can also have sections where whitespaces are kept as-is.
+/e/You can also have "pre-formatted" sections where whitespaces are kept as-is.
  ... which means you can do stuff like
                                         /u/this/u/.
 /e/
 
+/=/
+
 /p/
 Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque laudantium, totam rem aperiam, eaque ipsa quae ab illo inventore veritatis et quasi architecto beatae vitae dicta sunt explicabo. Nemo enim ipsam voluptatem quia voluptas sit aspernatur aut odit aut fugit, sed quia consequuntur magni dolores eos qui ratione voluptatem sequi nesciunt. Neque porro quisquam est, qui dolorem ipsum quia dolor sit amet, consectetur, adipisci velit, sed quia non numquam eius modi tempora incidunt ut labore et dolore magnam aliquam quaerat voluptatem. Ut enim ad minima veniam, quis nostrum exercitationem ullam corporis suscipit laboriosam, nisi ut aliquid ex ea commodi consequatur? Quis autem vel eum iure reprehenderit qui in ea voluptate velit esse quam nihil molestiae consequatur, vel illum qui dolorem eum fugiat quo voluptas nulla pariatur?
 /p/
+
+/>/
+bye :)

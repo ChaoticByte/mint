@@ -7,7 +7,7 @@ For a syntax- and feature-overview, have a look at [Quick Reference](#quick-refe
 
 # Markup
 
-Version 1
+Version 2
 
 > [!NOTE]  
 > See `example.mint` for a working usage example.
@@ -31,6 +31,10 @@ Tags toggle a style, so you can start bold text with `/b/` and end it with `/b/`
 | `/u/.../u/` | `<u>...</u>`     | <u>Underlined text</u> |
 | `/d/.../d/` | `<s>...</s>`     | ~~Deleted text~~       |
 | `/e/.../e/` | `<pre>...</pre>` | Keep whitespaces (spaces, new lines, ...) |
+| `/</...` | `<section style='text-align: left'>...` | Switch to left text-alignment |
+| `/\|/...` | `<section style='text-align: center'>...` | Switch to center text-alignment |
+| `/>/...` | `<section style='text-align: right'>...` | Switch to right text-alignment |
+| `/=/...` | `<section style='text-align: justify'>...` | Switch to justified text-alignment |
 | `/l/`       | `<br>`           | Line-break (new line)  |
 | `//`        | `/`              | Escape a forward slash |
 
